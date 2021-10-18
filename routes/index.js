@@ -1,9 +1,16 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+const HealthCenter = require('../models/HealthCenter');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('register-doctor', { title: 'Express' });
-});
+// Welcome Page
+router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
+
+// Dashboard
+router.get('/dashboard', ensureAuthenticated, (req, res, next) =>
+  res.render('dashboard', {
+    user: req.user
+  })
+);
 
 module.exports = router;

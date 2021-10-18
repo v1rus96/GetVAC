@@ -1,43 +1,64 @@
-require("rootpath");
-var express = require("express");
+const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const flash = require('connect-flash');
+const session = require('express-session');
 var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-const cors = require("cors");
-const errorHandler = require("./helpers/errorHandler");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/user.controllers");
+const app = express();
 
-var app = express();
+// Passport Config
+require('./config/passport')(passport);
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+// DB Config
+const db = require('./config/keys').mongoURI;
 
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// Connect to MongoDB
+mongoose
+  .connect(
+    db,
+    { useNewUrlParser: true ,useUnifiedTopology: true}
+  )
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
+
+// EJS
 app.use(express.static(path.join(__dirname, "assets")));
-app.use(cors());
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+// Express body parser
+app.use(express.urlencoded({ extended: true }));
+// Express session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  })
+);
 
-// catch 404 and forward to error handler
-app.use(errorHandler);
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+// Connect flash
+app.use(flash());
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+// Global variables
+app.use(function(req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
 });
 
-app.listen(5000, () => console.log(`Server is listening on PORT: 5000`));
-module.exports = app;
+// Routes
+app.use('/', require('./routes/index.js'));
+app.use('/users', require('./routes/users.js'));
+app.use('/batch', require('./routes/batch.js'));
+
+const PORT = process.env.PORT || 80;
+
+app.listen(PORT, console.log(`Server running on  ${PORT}`));

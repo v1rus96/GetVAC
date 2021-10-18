@@ -1,4 +1,0 @@
-{
-  "connectionString": "mongodb+srv://admin:admin@ktrialinfo.kbp1y.mongodb.net/getvac?retryWrites=true&w=majority",
-  "secret": "getvac"
-}

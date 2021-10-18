@@ -1,0 +1,157 @@
+<div class="main-wrapper">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+
+                    <div class="profile-sidebar">
+                        <div class="widget-profile pro-widget-content">
+                            <div class="profile-info-widget">
+                                <a href="#" class="booking-doc-img">
+                                    <img src="img/doctors/doctor-thumb-02.jpg" alt="User Image">
+                                </a>
+                                <div class="profile-det-info">
+                                    <h3>Dr. <%= user.fullName %>
+                                    </h3>
+                                    <div class="patient-details">
+                                        <h5 class="mb-0">BDS, MDS - Oral & Maxillofacial Surgery</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-widget">
+                            <nav class="dashboard-menu">
+                                <ul>
+                                    <li class="active">
+                                        <a href="appointments.html">
+                                            <i class="fas fa-calendar-check"></i>
+                                            <span>Appointments</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/batch/record">
+                                            <i class="fas fa-user-cog"></i>
+                                            <span>Record New Batch</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/batch/view">
+                                            <i class="fas fa-user-injured"></i>
+                                            <span>View Recorded Batches</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/users/logout">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            <span>Logout</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-7 col-lg-8 col-xl-9">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <form action="/batch/record/done" method="POST">
+                                <div class="row form-row">
+                                    
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control" value="<%= generatedID %>" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Blood Group</label>
+                                            <select class="form-control select" id="vaccineID" name="vaccineID">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Date of Birth</label>
+                                            <div class="cal-icon">
+                                                <input type="text" id="expiryDate" name="expiryDate" class="form-control datetimepicker"
+                                                    value="24-07-1983">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Mobile</label>
+                                            <input type="text" id="availableQuantity" name="availableQuantity" value="10" class="form-control">
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                                <div class="submit-section">
+                                    <button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+</div>
+
+
+<div class="modal fade custom-modal" id="appt_details">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Appointment Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="info-details">
+                    <li>
+                        <div class="details-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span class="title">#APT0001</span>
+                                    <span class="text">21 Oct 2019 10:00 AM</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-right">
+                                        <button type="button" class="btn bg-success-light btn-sm"
+                                            id="topup_status">Completed</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="title">Status:</span>
+                        <span class="text">Completed</span>
+                    </li>
+                    <li>
+                        <span class="title">Confirm Date:</span>
+                        <span class="text">29 Jun 2019</span>
+                    </li>
+                    <li>
+                        <span class="title">Paid Amount</span>
+                        <span class="text">$450</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

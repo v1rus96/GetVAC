@@ -1,38 +1,28 @@
 {
-  "name": "getvac",
-  "version": "1.0.0",
-  "description": "Assignment",
-  "main": "index.js",
+  "name": "node_passport_login",
+  "version": "2.0.0",
+  "description": "Node.js authentication with Passport",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/v1rus96/GetVAC.git"
-  },
-  "keywords": [
-    "getvac"
-  ],
-  "author": "Firuz & Mugesh",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/v1rus96/GetVAC/issues"
-  },
-  "homepage": "https://github.com/v1rus96/GetVAC#readme",
   "dependencies": {
-    "cookie-parser": "^1.4.5",
-    "cors": "^2.8.5",
-    "ejs": "^3.1.6",
-    "express": "^4.17.1",
-    "express-jwt": "^6.1.0",
-    "express-session": "^1.17.2",
-    "mongoose": "^6.0.11",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.13",
-    "passport": "^0.5.0",
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.15.6",
+    "mongoose": "^5.7.5",
+    "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^6.1.0",
-    "path": "^0.12.7",
-    "rootpath": "^0.1.2"
+    "shortid": "^2.2.16"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
   }
 }
