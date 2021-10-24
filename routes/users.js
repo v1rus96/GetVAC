@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-const shortid = require('shortid')
+const shortid = require('shortid');
 // Load User model
 const User = require('../models/User');
 const HealthCenter = require('../models/HealthCenter');
@@ -12,13 +12,22 @@ const { forwardAuthenticated } = require('../config/auth');
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 
 // Register Page
-router.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
+router.get('/register', forwardAuthenticated, (req, res) => {
+  HealthCenter.find({}).then(center => {
+    res.render('register', {centers: center})
+  })
+});
+
+router.get('/patient', forwardAuthenticated, (req, res) => res.render('patient'));
+
 
 // Register
 router.post('/register', (req, res) => {
-  const { username, fullName, email, password, password2, role, staffID, centerName, centerAddress } = req.body;
+  const { username, fullName, email, password, password2, role, staffID, centerName, centerAddress, existingCenter } = req.body;
   let errors = [];
+  let centers = HealthCenter.find({})
 
+  console.log(centers)
   if (!username|| !fullName || !email || !password || !password2) {
     errors.push({ msg: 'Please enter all fields' });
   }
@@ -38,7 +47,8 @@ router.post('/register', (req, res) => {
       fullName,
       email,
       password,
-      password2
+      password2,
+      centers: centers
     });
   } else {
     User.findOne({ username: username }).then(user => {
@@ -50,7 +60,8 @@ router.post('/register', (req, res) => {
           fullName,
           email,
           password,
-          password2
+          password2,
+          centers: centers
         });
       } else {
         const newUser = new User({
@@ -61,14 +72,21 @@ router.post('/register', (req, res) => {
           role,
           staffID
         });
-
+        
         if(role === "Specialist") {
-          const newHealthCenter = new HealthCenter({
-            centerName,
-            centerAddress,
-          });
-          newHealthCenter.staff.push(newUser);
-          newHealthCenter.save()
+          if(!centerName && !centerAddress) {
+            newUser.healthCenter = existingCenter;
+          }
+          else {
+            const newHealthCenter = new HealthCenter({
+              centerName,
+              centerAddress,
+            });
+            newHealthCenter.save()
+            newUser.healthCenter = newHealthCenter;
+          }
+          
+          
         }
 
         bcrypt.genSalt(10, (err, salt) => {
