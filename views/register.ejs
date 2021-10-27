@@ -1,75 +1,154 @@
+<div class="main-wrapper">
 
-  <div class="main-wrapper">
+  <div class="content"
+    style="background-image: url(https://news.emory.edu/features/2021/07/emory-inspired-vaccinations/assets/AUFW5W25an/footer-v2-h-no-logo-1734x970-1734x970-1734x970.jpeg); background-size: contain;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
 
-    <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-8 offset-md-2">
-
-            <div class="account-content">
-              <div class="row align-items-center justify-content-center">
-                <div class="col-md-12 col-lg-6 login-right">
-                  <div class="login-header">
-                    <h3>Doctor Register <a href="register.html">Not a Doctor?</a></h3>
-                  </div>
-                  <%- include("./partials/messages"); %>
-                  <form action="/users/register" method="POST">
-                    <div class="form-group form-focus">
-                      <input type="hidden" id="role" name="role" value="Specialist">
-                      <input type="text" id="username" name="username" class="form-control floating"
-                        value="<%= typeof username != 'undefined' ? username : '' %>">
-                      <label class="focus-label">Username</label>
-                    </div>
-                    <div class="form-group form-focus">
-                      <input type="text" id="fullName" name="fullName" class="form-control floating"
-                        value="<%= typeof fullName != 'undefined' ? fullName : '' %>">
-                      <label class="focus-label">Full name</label>
-                    </div>
-                    <div class="form-group form-focus">
-                      <input type="email" id="email" name="email" class="form-control floating"
-                        value="<%= typeof email != 'undefined' ? email : '' %>">
-                      <label class="focus-label">Email</label>
-                    </div>
-                    <div class="form-group form-focus">
-                      <input type="password" id="password" name="password" class="form-control floating"
-                        value="<%= typeof password != 'undefined' ? password : '' %>">
-                      <label class="focus-label">Create Password</label>
-                    </div>
-                    <div class="form-group form-focus">
-                      <input type="password" id="password2" name="password2" class="form-control floating"
-                        value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
-                      <label class="focus-label">Create Password</label>
-                    </div>
-                    <div class="login-or">
-                      <span class="or-line"></span>
-                      <span class="span-or">Medical Center</span>
-                    </div>
-                    <div class="form-group form-focus">
-                      <input type="text" id="staffID" name="staffID" class="form-control floating">
-                      <label class="focus-label">Staff ID</label>
-                    </div>
-                    <div class="form-group form-focus">
-                      <input type="text" id="centerName" name="centerName" class="form-control floating">
-                      <label class="focus-label">Center Name</label>
-                    </div>
-                    <div class="form-group form-focus">
-                      <input type="text" id="centerAddress" name="centerAddress" class="form-control floating">
-                      <label class="focus-label">Center Address</label>
-                    </div>
-                    <div class="text-right">
-                      <a class="forgot-link" href="/users/login">Already have an account?</a>
-                    </div>
-                    <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Signup</button>
-
-                  </form>
-
+          <div class="account-content">
+            <div style="margin-bottom: 30px;" class="row align-items-center justify-content-center">
+              <div class="col-md-12 col-lg-6 login-right">
+                <div style="text-align: center;" class="login-header">
+                  <img width="50%" src="http://localhost/img/logogetw.png" alt="">
+                  <h3>Registration</h3>
                 </div>
+
+                <div class="card-body">
+                  <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                    <li class="nav-item"><a class="nav-link active" href="#bottom-justified-tab1"
+                        data-toggle="tab">Patient</a></li>
+                    <li class="nav-item"><a class="nav-link " href="#bottom-justified-tab2" data-toggle="tab">Admin</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <%- include("./partials/messages"); %>
+                      <div class="tab-pane active" id="bottom-justified-tab1">
+                        <form action="/users/register" method="POST">
+                          <div class="form-group form-focus">
+                            <input type="hidden" id="role" name="role" value="Patient">
+                            <input type="text" id="username" name="username" class="form-control floating"
+                              value="<%= typeof username != 'undefined' ? username : '' %>">
+                            <label class="focus-label">Username</label>
+                          </div>
+                          <div class="form-group form-focus">
+                            <input type="text" id="fullName" name="fullName" class="form-control floating"
+                              value="<%= typeof fullName != 'undefined' ? fullName : '' %>">
+                            <label class="focus-label">Full name</label>
+                          </div>
+                          <div class="form-group form-focus">
+                            <input type="email" id="email" name="email" class="form-control floating"
+                              value="<%= typeof email != 'undefined' ? email : '' %>">
+                            <label class="focus-label">Email</label>
+                          </div>
+                          <div class="form-group form-focus">
+                            <input type="password" id="password" name="password" class="form-control floating"
+                              value="<%= typeof password != 'undefined' ? password : '' %>">
+                            <label class="focus-label">Create Password</label>
+                          </div>
+                          <div class="form-group form-focus">
+                            <input type="password" id="password2" name="password2" class="form-control floating"
+                              value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
+                            <label class="focus-label">Create Password</label>
+                          </div>
+                          <div class="form-group form-focus">
+                            <input type="text" id="staffID" name="staffID" class="form-control floating">
+                            <label class="focus-label">Passport Number</label>
+                          </div>
+                          <div class="text-right">
+                            <a class="forgot-link" href="/users/login">Already have an account?</a>
+                          </div>
+                          <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Register</button>
+
+                        </form>
+                      </div>
+                      <div class="tab-pane show" id="bottom-justified-tab2">
+
+                        <form action="/users/register" method="POST">
+                          <div class="form-group form-focus">
+                            <input type="hidden" id="role" name="role" value="Specialist">
+                            <input type="text" id="username" name="username" class="form-control floating"
+                              value="<%= typeof username != 'undefined' ? username : '' %>">
+                            <label class="focus-label">Username</label>
+                          </div>
+                          <div class="form-group form-focus">
+                            <input type="text" id="fullName" name="fullName" class="form-control floating"
+                              value="<%= typeof fullName != 'undefined' ? fullName : '' %>">
+                            <label class="focus-label">Full name</label>
+                          </div>
+                          <div class="form-group form-focus">
+                            <input type="email" id="email" name="email" class="form-control floating"
+                              value="<%= typeof email != 'undefined' ? email : '' %>">
+                            <label class="focus-label">Email</label>
+                          </div>
+                          <div class="form-group form-focus">
+                            <input type="password" id="password" name="password" class="form-control floating"
+                              value="<%= typeof password != 'undefined' ? password : '' %>">
+                            <label class="focus-label">Create Password</label>
+                          </div>
+                          <div class="form-group form-focus">
+                            <input type="password" id="password2" name="password2" class="form-control floating"
+                              value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
+                            <label class="focus-label">Create Password</label>
+                          </div>
+                          <div class="login-or">
+                            <span class="or-line"></span>
+                          </div>
+                          <div class="form-group" id="center">
+                            <select  class="form-control select" id="existingCenter" name="existingCenter">
+                              <% for(var i=0; i < centers.length; i++) {%>
+                                <option value="<%= centers[i]._id %>">
+                                  <%= centers[i].centerName %>
+                                </option>
+                                <% } %>
+                            </select>
+                            <div style="margin-top: 10px;" class="add-more">
+                              <a style="cursor: pointer;" onclick="check()" class="add-membership"><i
+                                  class="fa fa-plus-circle"></i> Add new Health Center</a>
+                            </div>
+                          </div>
+                          <div class="form-group form-focus" id="input1">
+                            <input type="text" id="centerName" name="centerName" class="form-control floating">
+                            <label class="focus-label">Center Name</label>
+                          </div>
+                          <div class="form-group form-focus" id="input2">
+                            <input type="text" id="centerAddress" name="centerAddress" class="form-control floating">
+                            <label class="focus-label">Center Address</label>
+                          </div>
+                          <div class="form-group form-focus">
+                            <input type="text" id="staffID" name="staffID" class="form-control floating">
+                            <label class="focus-label">Staff ID</label>
+                          </div>
+        
+                          <div class="text-right">
+                            <a class="forgot-link" href="/users/login">Already have an account?</a>
+                          </div>
+                          <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Register</button>
+
+                        </form>
+                      </div>
+                  </div>
+                </div>
+
+
               </div>
             </div>
-
           </div>
+
         </div>
       </div>
     </div>
-
   </div>
+
+</div>
+
+<script>
+  function check() {
+    var input1 = document.getElementById("input1")
+    var input2 = document.getElementById("input2")
+    var center = document.getElementById("center")
+    input1.classList.toggle("input1")
+    input2.classList.toggle("input2")
+    center.classList.toggle("center")
+  }
+</script>
