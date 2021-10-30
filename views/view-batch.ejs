@@ -1,0 +1,210 @@
+<div class="main-wrapper">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+
+                    <div class="profile-sidebar">
+                        <div class="widget-profile pro-widget-content">
+                            <div class="profile-info-widget">
+                                <a href="#" class="booking-doc-img">
+                                    <img style="transform: scale(1.4);" src="http://localhost/img/adminAnim.gif" alt="User Image">
+                                </a>
+                                <div class="profile-det-info">
+                                    <h3>Welcome, <%= user.fullName %>
+                                    </h3>
+                                    <div class="patient-details">
+                                        <h5 class="mb-0"><%= center.centerName %> (<%= user.staffID %>) </h5><br>
+                                        <button type="button" class="btn bg-warning-light btn-sm"
+                                        id="topup_status">Health Administrator</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-widget">
+                            <nav class="dashboard-menu">
+                                <ul>
+                                    <li>
+                                        <a href="/dashboard">
+                                            <i class="fas fa-calendar-check"></i>
+                                            <span>Appointments</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/batch/record">
+                                            <i class="fas fa-plus"></i>
+                                            <span>Record New Batch</span>
+                                        </a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="/batch/view">
+                                            <i class="fas fa-clone"></i>
+                                            <span>View Recorded Batches</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/users/logout">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            <span>Logout</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-7 col-lg-8 col-xl-9">
+                
+                <div class="row">
+                    <div class="col-sm-12">
+                    <div class="card">
+                    <div class="card-body pt-0">
+                <nav class="user-tabs mb-4">
+                    <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                    <li class="nav-item">
+                    <a class="nav-link active" href="#pfizer" data-toggle="tab">Pfizer</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#moderna" data-toggle="tab">Moderna</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#jj" data-toggle="tab">Johnson & Johnson</a>
+                    </li>
+                    </ul>
+                    </nav>
+                    <div class="tab-content pt-0">
+
+                        <div id="pfizer" class="tab-pane fade show active">
+                            <div class="appointments">
+                                <% 
+                                let count = 0;
+                                for(var i=0; i<pfizer.length; i++) {
+                            %>
+                                <% 
+                                    if(center.batches.includes(pfizer[i]._id)) {
+                                    count += 1    
+                                %>
+                                    <div class="appointment-list">
+                                        <div class="profile-info-widget">
+                                            <a href="#" class="booking-doc-img">
+                                                <img src="http://localhost/img/pfizer.png" alt="User Image">
+                                            </a>
+                                            <div class="profile-det-info">
+                                                <h3>BatchID: <%= pfizer[i].batchID %></h3><br>
+                                                <div class="patient-details">
+                                                    <h5><i class="fas fa-calendar"></i> <%= pfizer[i].expiryDate %> expiry </h5>
+                                                    <h5><i class="fas fa-check-circle"></i> <%= pfizer[i].availableQuantity %> quantity available</h5>
+                                                    <h5 class="mb-0"><i class="fas fa-plus-circle"></i> <%= pfizer[i].administratedQuantity %> administrated</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                <% } %>
+                                <% } %>
+                                <% if(count === 0) { %>
+                                    <div class="card-body">
+                                        <div class="success-cont" >
+                                            <i class="far fa-clone"></i>
+                                            <h5 style="color: lightgrey;">There is no available batches for this vaccine yet!</h5><br>
+                                            <a href="/batch/record" class="btn btn-primary view-inv-btn">Record New Batch</a>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="tab-pane fade" id="moderna">
+                            <div class="appointments">
+                                <% 
+                                let count2 = 0;
+                                for(var i=0; i<moderna.length; i++) {
+                            %>
+                                <% 
+                                    if(center.batches.includes(moderna[i]._id)) {
+                                    count2 += 1    
+                                %>
+                                    <div class="appointment-list">
+                                        <div class="profile-info-widget">
+                                            <a href="#" class="booking-doc-img">
+                                                <img src="http://localhost/img/moderna.png" alt="User Image">
+                                            </a>
+                                            <div class="profile-det-info">
+                                                <h3>BatchID: <%= moderna[i].batchID %></h3><br>
+                                                <div class="patient-details">
+                                                    <h5><i class="fas fa-calendar"></i> <%= moderna[i].expiryDate %> expiry </h5>
+                                                    <h5><i class="fas fa-check-circle"></i> <%= moderna[i].availableQuantity %> quantity available</h5>
+                                                    <h5 class="mb-0"><i class="fas fa-plus-circle"></i> <%= moderna[i].administratedQuantity %> administrated</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                <% } %>
+                                <% } %>
+                                <% if(count2 === 0) { %>
+                                    <div class="card-body">
+                                        <div class="success-cont" >
+                                            <i class="far fa-clone"></i>
+                                            <h5 style="color: lightgrey;">There is no available batches for this vaccine yet!</h5><br>
+                                            <a href="/batch/record" class="btn btn-primary view-inv-btn">Record New Batch</a>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="jj">
+                            <div class="appointments">
+                                <% 
+                                let count3 = 0;
+                                for(var i=0; i<jj.length; i++) {
+                            %>
+                                <% 
+                                    if(center.batches.includes(jj[i]._id)) {
+                                    count3 += 1    
+                                %>
+                                    <div class="appointment-list">
+                                        <div class="profile-info-widget">
+                                            <a href="#" class="booking-doc-img">
+                                                <img src="http://localhost/img/jaj.png" alt="User Image">
+                                            </a>
+                                            <div class="profile-det-info">
+                                                <h3>BatchID: <%= jj[i].batchID %></h3><br>
+                                                <div class="patient-details">
+                                                    <h5><i class="fas fa-calendar"></i> <%= jj[i].expiryDate %> expiry </h5>
+                                                    <h5><i class="fas fa-check-circle"></i> <%= jj[i].availableQuantity %> quantity available</h5>
+                                                    <h5 class="mb-0"><i class="fas fa-plus-circle"></i> <%= jj[i].administratedQuantity %> administrated</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                <% } %>
+                                <% } %>
+                                <% if(count3 === 0) { %>
+                                    <div class="card-body">
+                                        <div class="success-cont" >
+                                            <i class="far fa-clone"></i>
+                                            <h5 style="color: lightgrey;">There is no available batches for this vaccine yet!</h5><br>
+                                            <a href="/batch/record" class="btn btn-primary view-inv-btn">Record New Batch</a>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                        
+                        </div>
+                   
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
