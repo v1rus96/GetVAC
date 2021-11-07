@@ -1,0 +1,121 @@
+<div class="main-wrapper">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+                    <div class="profile-sidebar">
+                        <div class="widget-profile pro-widget-content">
+                            <div class="profile-info-widget">
+                                <a href="#" class="booking-doc-img">
+                                    <img style="transform: scale(1.4);" src="http://localhost/img/patientAnim.gif" alt="User Image">
+                                </a>
+                                <div class="profile-det-info">
+                                    <h3>
+                                        Welcome, <%= user.fullName %>
+                                    </h3>
+                                    <div class="patient-details">
+                                        <button type="button" class="btn bg-info-light btn-sm"
+                                                                    id="topup_status">Patient</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-widget">
+                            <nav class="dashboard-menu">
+                                <ul>
+                                    <li class="active" style="background-color: gold;">
+                                        <a style="color: white;">
+                                            <i class="fas fa-building"></i>
+                                            <span>Choose Medical Center</span>
+                                        </a>
+                                    </li>
+                                    <li style="background-color: rgba(211, 211, 211, 0.535);">
+                                        <a style="color: grey;">
+                                            <i class="fas fa-clone"></i>
+                                            <span>Choose Vaccine Batch</span>
+                                        </a>
+                                    </li>
+                                    <li style="background-color: rgba(211, 211, 211, 0.535);">
+                                        <a style="color: grey;">
+                                            <i class="fas fa-calendar"></i>
+                                            <span>Appointment Booked</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/users/logout">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            <span>Logout</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-7 col-lg-8 col-xl-9">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                            <div class="card-body pt-0">
+                    <div style="margin-top: 25px;" class="appointments">
+                                <div class="row">
+                                    <% for(var b=0; b<clinic.length; b++) {%>
+                                        <% 
+                                            var total = 0; 
+                                            for(var i=0; i<clinic[b].batches.length; i++) {
+                                                total += clinic[b].batches[i].availableQuantity;
+                                            }
+                                        %>
+                                    <div class="col-sm-6 col-md-6 col-xl-4">
+                                        <div class="profile-widget">
+                                            <div class="doc-img">
+                                                <a href="/batch/<%= clinic[b]._id %>">
+                                                    <img class="img-fluid" alt="User Image"
+                                                        src="http://localhost/img/hos.jpeg">
+                                                </a>
+                                        
+                                            </div>
+                                            <div class="pro-content">
+                                                <h3 class="title">
+                                                    <a href="/batch/<%= clinic[b]._id %>"><%= clinic[b].centerName %></a>
+                                                    <% if(total > 0) { %>
+                                                        <i class="fas fa-check-circle verified"></i>
+                                                    <% } else {%>
+                                                        <i class="fas fa-times-circle rejected"></i>
+                                                    <% }%>
+                                                </h3>
+                                                <br>
+                                                <ul class="available-info">
+                                                    <li>
+                                                        <i class="fas fa-map-marker-alt"></i> <%= clinic[b].centerAddress %>
+                                                    </li>
+                                                    <li>
+                                                        <i class="far fa-clone"></i> <%= clinic[b].batches.length %> batches
+                                                    </li>
+                                                    <li>
+                                                        <i class="fas fa-check"></i> <%= total %> available quantity
+                                                    </li>
+                                                    
+                                                </ul>
+                                                <div class="row row-sm">
+                                                    <div class="col-12">
+                                                        <a href="/batch/<%= clinic[b]._id %>" class="btn book-btn">Choose</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
