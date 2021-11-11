@@ -8,13 +8,15 @@
                         <div class="widget-profile pro-widget-content">
                             <div class="profile-info-widget">
                                 <a href="#" class="booking-doc-img">
-                                    <img src="img/doctors/doctor-thumb-02.jpg" alt="User Image">
+                                    <img style="transform: scale(1.4);" src="http://localhost/img/adminAnim.gif" alt="User Image">
                                 </a>
                                 <div class="profile-det-info">
-                                    <h3>Dr. <%= user.fullName %>
+                                    <h3>Welcome, <%= user.fullName %>
                                     </h3>
                                     <div class="patient-details">
-                                        <h5 class="mb-0">BDS, MDS - Oral & Maxillofacial Surgery</h5>
+                                        <h5 class="mb-0"><%= center.centerName %> (<%= user.staffID %>) </h5><br>
+                                        <button type="button" class="btn bg-warning-light btn-sm"
+                                        id="topup_status">Health Administrator</button>
                                     </div>
                                 </div>
                             </div>
@@ -22,21 +24,21 @@
                         <div class="dashboard-widget">
                             <nav class="dashboard-menu">
                                 <ul>
-                                    <li class="active">
-                                        <a href="appointments.html">
+                                    <li>
+                                        <a href="/dashboard">
                                             <i class="fas fa-calendar-check"></i>
                                             <span>Appointments</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="active">
                                         <a href="/batch/record">
-                                            <i class="fas fa-user-cog"></i>
+                                            <i class="fas fa-plus"></i>
                                             <span>Record New Batch</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/batch/view">
-                                            <i class="fas fa-user-injured"></i>
+                                            <i class="fas fa-clone"></i>
                                             <span>View Recorded Batches</span>
                                         </a>
                                     </li>
@@ -56,45 +58,87 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <form action="/batch/record/done" method="POST">
+                            <form action="/batch/record/<%= generatedID %>/done" method="POST">
                                 <div class="row form-row">
                                     
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label>First Name</label>
+                                            <label>BatchID</label>
                                             <input type="text" class="form-control" value="<%= generatedID %>" disabled>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label>Blood Group</label>
+                                            <label>Vaccine Type</label>
                                             <select class="form-control select" id="vaccineID" name="vaccineID">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
+                                                <option value="1">Pfizer</option>
+                                                <option value="2">Moderna</option>
+                                                <option value="3">Johnson & Johnson</option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label>Date of Birth</label>
-                                            <div class="cal-icon">
-                                                <input type="text" id="expiryDate" name="expiryDate" class="form-control datetimepicker"
-                                                    value="24-07-1983">
+                                            <label>Detailed Information</label>
+                                            
+                                            <div style="display: block;" id="1" class="alert alert-success alert-dismissible fade show" role="alert">
+                                                <div class="row profile-info-widget">
+                                              
+                                                        <img style="margin-right: 10px;" height="50px" src="http://localhost/img/pfizer.png" alt="User Image">
+                                                        <div class="profile-det-info">
+                                                            <div style="margin-top: 5px;" class="patient-details">
+                                                                <h5 style="color: rgba(9, 136, 9, 0.542);"><i  class="fa fa-medkit"></i> Pfizer Vaccine </h5>
+                                                                <h5 style="color: rgba(9, 136, 9, 0.542);"><i  class="fas fa-info-circle"></i> Manufactured by BioNTech</h5>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                </div>
                                             </div>
+                                                <div style="display: none;" id="2" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                    <div class="row profile-info-widget">
+                                              
+                                                        <img style="margin-right: 10px;" height="50px" src="http://localhost/img/moderna.png" alt="User Image">
+                                                        <div class="profile-det-info">
+                                                            <div style="margin-top: 5px;" class="patient-details">
+                                                                <h5 style="color: rgba(136, 9, 9, 0.542);"><i  class="fa fa-medkit"></i> Moderna Vaccine</h5>
+                                                                <h5 style="color: rgba(136, 9, 9, 0.542);"><i  class="fas fa-info-circle"></i> Manufactured by Moderna Therapeutics</h5>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                </div>
+                                                </div>
+                                                    <div  style="display: none;" id="3" class="alert alert-primary alert-dismissible fade show" role="alert">
+                                                        <div class="row profile-info-widget">
+                                              
+                                                            <img style="margin-right: 10px;" height="50px" src="http://localhost/img/jaj.png" alt="User Image">
+                                                            <div class="profile-det-info">
+                                                                <div style="margin-top: 5px;" class="patient-details">
+                                                                    <h5 style="color: rgba(9, 49, 136, 0.542);"><i  class="fa fa-medkit"></i> Johnson & Johnson Vaccine</h5>
+                                                                    <h5 style="color: rgba(9, 49, 136, 0.542);"><i  class="fas fa-info-circle"></i> Manufactured by Johnson & Johnson Therapeutics</h5>
+                                                                </div>
+                                                            </div>
+                                                        
+                                                    </div>
+                                                    </div>
+                                            
                                         </div>
+                                        
                                     </div>
                                     
                                     <div class="col-12 col-md-6">
+                                        
                                         <div class="form-group">
-                                            <label>Mobile</label>
+                                            <label>Expiry date</label>
+                                            <input type="date" class="form-control" name="expiryDate" id="expiryDate" value="Date.now()" min="2021-10-30">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Available quantity</label>
                                             <input type="text" id="availableQuantity" name="availableQuantity" value="10" class="form-control">
                                         </div>
+                                        
                                     </div>
+                              
                                 
                                 </div>
                                 <div class="submit-section">
-                                    <button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary submit-btn">Record Batch</button>
                                 </div>
                             </form>
 
@@ -155,3 +199,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('vaccineID').onchange = function() {
+    var i = 1;
+    var myDiv = document.getElementById(i);
+    while(myDiv) {
+        myDiv.style.display = 'none';
+        myDiv = document.getElementById(++i);
+    }
+    document.getElementById(this.value).style.display = 'block';
+};
+</script>
