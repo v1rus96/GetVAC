@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Vaccination = require('../models/Vaccination');
 
 const BatchSchema = new mongoose.Schema({
   batchID: {
@@ -16,7 +17,11 @@ const BatchSchema = new mongoose.Schema({
   administratedQuantity: {
     type: Number,
     default: 0
-  }
+  },
+  vaccinations: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Vaccination,
+  }],
 });
 
 const Batch = mongoose.model('Batch', BatchSchema);
