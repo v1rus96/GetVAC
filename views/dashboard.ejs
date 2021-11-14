@@ -8,12 +8,14 @@
                         <div class="widget-profile pro-widget-content">
                             <div class="profile-info-widget">
                                 <a href="#" class="booking-doc-img">
-                                    <img src="img/doctors/doctor-thumb-02.jpg" alt="User Image">
+                                    <img style="transform: scale(1.4);" src="img/adminAnim.gif" alt="User Image">
                                 </a>
                                 <div class="profile-det-info">
-                                    <h3>Dr. <%= user.fullName %></h3>
+                                    <h3>Welcome, <%= user.fullName %></h3>
                                     <div class="patient-details">
-                                        <h5 class="mb-0">Works in: Medical Center</h5>
+                                        <h5 class="mb-0"><%= center.centerName %> (<%= user.staffID %>)</h5><br>
+                                        <button type="button" class="btn bg-warning-light btn-sm"
+                                        id="topup_status">Health Administrator</button>
                                     </div>
                                 </div>
                             </div>
@@ -22,20 +24,20 @@
                             <nav class="dashboard-menu">
                                 <ul>
                                     <li class="active">
-                                        <a href="appointments.html">
+                                        <a href="/dashboard">
                                             <i class="fas fa-calendar-check"></i>
                                             <span>Appointments</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/batch/record">
-                                            <i class="fas fa-user-cog"></i>
+                                            <i class="fas fa-plus"></i>
                                             <span>Record New Batch</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/batch/view">
-                                            <i class="fas fa-user-injured"></i>
+                                            <i class="fas fa-clone"></i>
                                             <span>View Recorded Batches</span>
                                         </a>
                                     </li>
@@ -52,153 +54,232 @@
 
                 </div>
                 <div class="col-md-7 col-lg-8 col-xl-9">
+                    <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                        <div class="card-body pt-0">
+                    <nav class="user-tabs mb-4">
+                        <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                        <li class="nav-item">
+                        <a class="nav-link active" href="#new" data-toggle="tab">New</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#accepted" data-toggle="tab">Accepted</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#rejected" data-toggle="tab">Rejected</a>
+                        </li>
+                        </ul>
+                        </nav>
+                        <div class="tab-content pt-0">
+                            <div id="new" class="tab-pane fade show active">
                     <div class="appointments">
-
+                        <% let count = 0 %>
+                        <% for(var i=0; i<center.batches.length; i++) {%>
+                            <% for(var b=0; b<center.batches[i].vaccinations.length; b++) {%>
+                                <% if(center.batches[i].vaccinations[b].status === "New") {%>
+                                <% 
+                                    count += 1
+                                    let foundUser = user
+                                    for(var u=0; u<all.length; u++) {
+                                        if(all[u].vaccinations.includes(center.batches[i].vaccinations[b]._id)) {
+                                            foundUser = all[u];
+                                        }
+                                }%>
                         <div class="appointment-list">
                             <div class="profile-info-widget">
-                                <a href="patient-profile.html" class="booking-doc-img">
-                                    <img src="img/patients/patient.jpg" alt="User Image">
+                                <a href="#" class="booking-doc-img">
+                    
+                                    <img style="transform: scale(1.4);" src="img/patientStat.png" alt="User Image">
                                 </a>
+                               
                                 <div class="profile-det-info">
-                                    <h3><a href="patient-profile.html">Patient Name</a></h3>
+                                    <h3><%= foundUser.fullName %></h3>
                                     <div class="patient-details">
-                                        <h5><i class="far fa-clock"></i> 14 Nov 2019, 10.00 AM</h5>
-                                        <h5><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</h5>
-                                        <h5><i class="fas fa-envelope"></i> <a
-                                                href="https://doccure-html.dreamguystech.com/cdn-cgi/l/email-protection"
-                                                class="__cf_email__"
-                                                data-cfemail="44362d272c25362004213c25293428216a272b29">[email&#160;protected]</a>
+                                        <h5><i class="fas fa-address-card"></i> <%= foundUser.passportNum %> </h5>
+
+                                        <h5><i class="fas fa-envelope"></i> <%= foundUser.email %>
                                         </h5>
-                                        <h5 class="mb-0"><i class="fas fa-phone"></i> +60 12 124 5123</h5>
+                                        <h5 class="mb-0"><i class="fas fa-calendar-check"></i> <%= foundUser.vaccinations.length %></h5>
                                     </div>
                                 </div>
                             </div>
                             <div class="appointment-action">
-                                <a href="#" class="btn btn-sm bg-info-light" data-toggle="modal"
-                                    data-target="#appt_details">
+                                <button style="margin: 8px;" class="btn btn-sm bg-info-light" data-toggle="modal"
+                                    data-target="#M<%= center.batches[i].vaccinations[b]._id.toString() %>">
                                     <i class="far fa-eye"></i> View
-                                </a>
-                                <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-                                    <i class="fas fa-check"></i> Accept
-                                </a>
-                                <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-                                    <i class="fas fa-times"></i> Cancel
-                                </a>
+                            </button>
+                                <form action="/appointment/<%= center.batches[i]._id %>/<%= center.batches[i].vaccinations[b]._id %>/status" method="POST">
+                                    <button style="margin: 4px;" type="submit" class="btn btn-sm bg-success-light" id="accept" name="status" value="Accepted">
+                                        <i class="fas fa-check"></i> Accept
+                                    </button>
+                                    <button style="margin: 4px;" type="submit" class="btn btn-sm bg-danger-light" id="reject" name="status" value="Rejected">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                </form>
+                                
                             </div>
                         </div>
-
-
-                        <div class="appointment-list">
-                            <div class="profile-info-widget">
-                                <a href="patient-profile.html" class="booking-doc-img">
-                                    <img src="img/patients/patient1.jpg" alt="User Image">
-                                </a>
-                                <div class="profile-det-info">
-                                    <h3><a href="patient-profile.html">Patient Name </a></h3>
-                                    <div class="patient-details">
-                                        <h5><i class="far fa-clock"></i> 12 Nov 2019, 5.00 PM</h5>
-                                        <h5><i class="fas fa-map-marker-alt"></i> North Carolina, United States</h5>
-                                        <h5><i class="fas fa-envelope"></i> <a
-                                                href="https://doccure-html.dreamguystech.com/cdn-cgi/l/email-protection"
-                                                class="__cf_email__"
-                                                data-cfemail="0a69626b78666f646f786f6f6e4a6f726b677a666f24696567">[email&#160;protected]</a>
-                                        </h5>
-                                        <h5 class="mb-0"><i class="fas fa-phone"></i> +60 12 124 5123</h5>
-                                    </div>
+                        <% } %>
+                        <% } %>
+                        <% } %>
+                        <% if(count === 0) { %>
+                            <div class="card-body">
+                                <div class="success-cont" >
+                                    <i class="far fa-clone"></i>
+                                    <h5 style="color: lightgrey;">There is no new appointments so far!</h5>
+                           
+    
                                 </div>
                             </div>
-                            <div class="appointment-action">
-                                <a href="#" class="btn btn-sm bg-info-light" data-toggle="modal"
-                                    data-target="#appt_details">
-                                    <i class="far fa-eye"></i> View
-                                </a>
-                                <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-                                    <i class="fas fa-check"></i> Accept
-                                </a>
-                                <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-                                    <i class="fas fa-times"></i> Cancel
-                                </a>
-                            </div>
-                        </div>
-
-
-                        <div class="appointment-list">
-                            <div class="profile-info-widget">
-                                <a href="patient-profile.html" class="booking-doc-img">
-                                    <img src="img/patients/patient2.jpg" alt="User Image">
-                                </a>
-                                <div class="profile-det-info">
-                                    <h3><a href="patient-profile.html">Patient Name</a></h3>
-                                    <div class="patient-details">
-                                        <h5><i class="far fa-clock"></i> 11 Nov 2019, 8.00 PM</h5>
-                                        <h5><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</h5>
-                                        <h5><i class="fas fa-envelope"></i> <a
-                                                href="https://doccure-html.dreamguystech.com/cdn-cgi/l/email-protection"
-                                                class="__cf_email__"
-                                                data-cfemail="017573607768727573686c636d64416479606c716d642f626e6c">[email&#160;protected]</a>
-                                        </h5>
-                                        <h5 class="mb-0"><i class="fas fa-phone"></i> +60 12 124 5123</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="appointment-action">
-                                <a href="#" class="btn btn-sm bg-info-light" data-toggle="modal"
-                                    data-target="#appt_details">
-                                    <i class="far fa-eye"></i> View
-                                </a>
-                                <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-                                    <i class="fas fa-check"></i> Accept
-                                </a>
-                                <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-                                    <i class="fas fa-times"></i> Cancel
-                                </a>
-                            </div>
-                        </div>
-
-
-                        <div class="appointment-list">
-                            <div class="profile-info-widget">
-                                <a href="patient-profile.html" class="booking-doc-img">
-                                    <img src="img/patients/patient3.jpg" alt="User Image">
-                                </a>
-                                <div class="profile-det-info">
-                                    <h3><a href="patient-profile.html">Patient Name</a></h3>
-                                    <div class="patient-details">
-                                        <h5><i class="far fa-clock"></i> 9 Nov 2019, 9.00 AM</h5>
-                                        <h5><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</h5>
-                                        <h5><i class="fas fa-envelope"></i> <a
-                                                href="https://doccure-html.dreamguystech.com/cdn-cgi/l/email-protection"
-                                                class="__cf_email__"
-                                                data-cfemail="54373526383f3138382d14312c35392438317a373b39">[email&#160;protected]</a>
-                                        </h5>
-                                        <h5 class="mb-0"><i class="fas fa-phone"></i> +60 12 124 5123</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="appointment-action">
-                                <a href="#" class="btn btn-sm bg-info-light" data-toggle="modal"
-                                    data-target="#appt_details">
-                                    <i class="far fa-eye"></i> View
-                                </a>
-                                <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-                                    <i class="fas fa-check"></i> Accept
-                                </a>
-                                <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-                                    <i class="fas fa-times"></i> Cancel
-                                </a>
-                            </div>
-                        </div>
-
+                        <% } %>
                     </div>
                 </div>
+
+                <div id="accepted" class="tab-pane fade">
+                    <div class="appointments">
+                        <% let count1 = 0 %>
+                        <% for(var i=0; i<center.batches.length; i++) {%>
+                            <% for(var b=0; b<center.batches[i].vaccinations.length; b++) {%>
+                                <% if(center.batches[i].vaccinations[b].status === "Accepted") {%>
+                                <% 
+                                    count1 += 1
+                                    let foundUser = user
+                                    for(var u=0; u<all.length; u++) {
+                                        if(all[u].vaccinations.includes(center.batches[i].vaccinations[b]._id)) {
+                                            foundUser = all[u];
+                                        }
+                                }%>
+                        <div class="appointment-list">
+                            <div class="profile-info-widget">
+                                <a href="#" class="booking-doc-img">
+                    
+                                    <img style="transform: scale(1.4);" src="img/patientStat.png" alt="User Image">
+                                </a>
+                               
+                                <div class="profile-det-info">
+                                    <h3><%= foundUser.fullName %></h3>
+                                    <div class="patient-details">
+                                        <h5><i class="fas fa-address-card"></i> <%= foundUser.passportNum %> </h5>
+
+                                        <h5><i class="fas fa-envelope"></i> <%= foundUser.email %>
+                                        </h5>
+                                        <h5 class="mb-0"><i class="fas fa-calendar-check"></i> <%= foundUser.vaccinations.length %></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="appointment-action">
+                                <button style="margin: 8px;" class="btn btn-sm bg-info-light" data-toggle="modal"
+                                    data-target="#M<%= center.batches[i].vaccinations[b]._id.toString() %>">
+                                    <i class="far fa-eye"></i> View
+                            </button>
+                                <form action="/appointment/<%= center.batches[i]._id %>/<%= center.batches[i].vaccinations[b]._id %>/status" method="POST">
+                                    <button style="margin: 4px;" type="submit" class="btn btn-sm bg-primary-light" id="accept" name="status" value="Administrated">
+                                        <i class="fas fa-plus"></i> Administrate
+                                    </button>
+                                </form>
+                                
+                            </div>
+                        </div>
+                        <% } %>
+                        
+                        <% } %>
+                        <% } %>
+                        <% if(count1 === 0) { %>
+                            <div class="card-body">
+                                <div class="success-cont" >
+                                    <i class="far fa-clone"></i>
+                                    <h5 style="color: lightgrey;">There is no new appointments so far!</h5>
+                           
+    
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div id="rejected" class="tab-pane fade">
+                    <div class="appointments">
+                        <% let count2 = 0 %>
+                        <% for(var i=0; i<center.batches.length; i++) {%>
+                            <% for(var b=0; b<center.batches[i].vaccinations.length; b++) {%>
+                                <% if(center.batches[i].vaccinations[b].status === "Rejected") {%>
+                                <% 
+                                    count2 += 1
+                                    let foundUser = user
+                                    for(var u=0; u<all.length; u++) {
+                                        if(all[u].vaccinations.includes(center.batches[i].vaccinations[b]._id)) {
+                                            foundUser = all[u];
+                                        }
+                                }%>
+                        <div class="appointment-list">
+                            <div class="profile-info-widget">
+                                <a href="#" class="booking-doc-img">
+                    
+                                    <img style="transform: scale(1.4);" src="img/patientStat.png" alt="User Image">
+                                </a>
+                               
+                                <div class="profile-det-info">
+                                    <h3><%= foundUser.fullName %></h3>
+                                    <div class="patient-details">
+                                        <h5><i class="fas fa-address-card"></i> <%= foundUser.passportNum %> </h5>
+
+                                        <h5><i class="fas fa-envelope"></i> <%= foundUser.email %>
+                                        </h5>
+                                        <h5 class="mb-0"><i class="fas fa-calendar-check"></i> <%= foundUser.vaccinations.length %></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="appointment-action">
+                                <button style="margin: 8px;" class="btn btn-sm bg-info-light" data-toggle="modal"
+                                    data-target="#M<%= center.batches[i].vaccinations[b]._id.toString() %>">
+                                    <i class="far fa-eye"></i> View
+                            </button>
+                   
+                                
+                            </div>
+                        </div>
+                        <% } %>
+                        <% } %>
+                        <% } %>
+                        <% if(count2 === 0) { %>
+                            <div class="card-body">
+                                <div class="success-cont" >
+                                    <i class="far fa-clone"></i>
+                                    <h5 style="color: lightgrey;">There is no new appointments so far!</h5>
+                           
+    
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-
+</div>
+                        
 </div>
 
 
-<div class="modal fade custom-modal" id="appt_details">
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<% for(var i=0; i<center.batches.length; i++) {%>
+<% for(var b=0; b<center.batches[i].vaccinations.length; b++) {%>
+    <% 
+        let foundUser = user
+        for(var u=0; u<all.length; u++) {
+            if(all[u].vaccinations.includes(center.batches[i].vaccinations[b]._id)) {
+                foundUser = all[u];
+            }
+    }%>
+<div class="modal fade custom-modal" id="M<%= center.batches[i].vaccinations[b]._id.toString() %>">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -213,13 +294,24 @@
                         <div class="details-header">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <span class="title">#APT0001</span>
-                                    <span class="text">21 Oct 2019 10:00 AM</span>
+                                    
+                                    <span class="title">BatchID:</span>
+                                    <span class="text"><%= center.batches[i].batchID %></span>
+                                        
+
                                 </div>
                                 <div class="col-md-6">
                                     <div class="text-right">
-                                        <button type="button" class="btn bg-success-light btn-sm"
-                                            id="topup_status">Completed</button>
+                                        <% if(center.batches[i].vaccinations[b].status === "New") {%>
+                                            <button type="button" class="btn bg-warning-light btn-sm"
+                                            id="topup_status"><%= center.batches[i].vaccinations[b].status %></button>
+                                        <% } else if(center.batches[i].vaccinations[b].status === "Accepted") {%>
+                                            <button type="button" class="btn bg-success-light btn-sm"
+                                            id="topup_status"><%= center.batches[i].vaccinations[b].status %></button>
+                                        <% } else if(center.batches[i].vaccinations[b].status === "Rejected") {%>
+                                            <button type="button" class="btn bg-danger-light btn-sm"
+                                            id="topup_status"><%= center.batches[i].vaccinations[b].status %></button>
+                                        <% } %>
                                     </div>
                                 </div>
                             </div>
@@ -227,18 +319,25 @@
                     </li>
                     <li>
                         <span class="title">Status:</span>
-                        <span class="text">Completed</span>
+                        <span class="text"><%= center.batches[i].vaccinations[b].status %></span>
                     </li>
                     <li>
-                        <span class="title">Confirm Date:</span>
-                        <span class="text">29 Jun 2019</span>
+                        <span class="title">Vaccine type:</span>
+                        <span class="text">Pfizer</span>
                     </li>
                     <li>
-                        <span class="title">Paid Amount</span>
-                        <span class="text">$450</span>
+                        <span class="title">Expiry Date:</span>
+                        <span class="text"><%= center.batches[i].expiryDate %></span>
+                    </li>
+                    <li>
+                        <span class="title">Appointment date:</span>
+                        <span class="text"><%= center.batches[i].vaccinations[b].appointmentDate %></span>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
+<% } %>
+<% } %>
+
