@@ -3734,6 +3734,12 @@ html.menu-opened body {
 	color: #28a745;
 	margin-left: 3px;
 }
+
+.profile-widget .rejected {
+	color: #a72828;
+	margin-left: 3px;
+}
+
 .profile-widget p.speciality {
     font-size: 13px;
     color: #757575;
