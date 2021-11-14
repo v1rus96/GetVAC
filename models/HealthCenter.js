@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Batch = require('../models/Batch');
 
 const HealthCenterSchema = new mongoose.Schema({
   centerName: {
@@ -9,9 +10,10 @@ const HealthCenterSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  staff: {
-    type: Array,
-  }
+  batches: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Batch
+  }]
 });
 
 const HealthCenter = mongoose.model('HealthCenter', HealthCenterSchema);
