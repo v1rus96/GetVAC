@@ -1,0 +1,109 @@
+<div class="main-wrapper">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+
+                    <div class="profile-sidebar">
+                        <div class="widget-profile pro-widget-content">
+                            <div class="profile-info-widget">
+                                <a href="#" class="booking-doc-img">
+                                    <img style="transform: scale(1.4);" src="http://localhost/img/patientAnim.gif" alt="User Image">
+                                </a>
+                                <div class="profile-det-info">
+                                    <h3>
+                                        Welcome, <%= user.fullName %>
+                                    </h3>
+                                    <div class="patient-details">
+                                        <button type="button" class="btn bg-info-light btn-sm"
+                                                                    id="topup_status">Patient</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-widget">
+                            <nav class="dashboard-menu">
+                                <ul>
+                                    <li style="background-color: #09e5ab;">
+                                        <a style="color: white;">
+                                            <i class="fas fa-check"></i>
+                                            <span>Choose Medical Center</span>
+                                        </a>
+                                    </li>
+                                    <li style="background-color: #09e5ab;">
+                                        <a style="color: white;">
+                                            <i class="fas fa-check"></i>
+                                            <span>Choose Vaccine Batch</span>
+                                        </a>
+                                    </li>
+                                    <li style="background-color: #09e5ab;">
+                                        <a style="color: white;">
+                                            <i class="fas fa-check"></i>
+                                            <span>Appointment Booked</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/users/logout">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            <span>Logout</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-7 col-lg-8 col-xl-9">
+                    <div class="appointments">
+                        <div class="card">
+                            <div class="card-body">
+                            <div class="doctor-widget">
+                            <div class="doc-info-left">
+                            <div class="doctor-img">
+                            <img src="http://localhost/img/hos.jpeg" class="img-fluid" alt="User Image">
+                            </div>
+                            <div class="doc-info-cont">
+                            <h4 class="doc-name"><%= center[0].centerName %></h4>
+                            
+                            
+                            <div class="clinic-details">
+                            <p class="doc-location"><i class="fas fa-map-marker-alt"></i> <%= center[0].centerAddress %> - <a href="javascript:void(0);">Get Directions</a></p>
+                            </div>
+                            <p class="doc-speciality">Appointment has been booked please wait for approval</p>
+                            </div>
+                            </div>
+                       
+                            </div>
+                            </div>
+                            </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card">
+                                        <div class="card-body pt-0">
+                                    
+                                                 
+                                                        <div class="card-body">
+                                                            <div class="success-cont">
+                                                                <i class="fas fa-check"></i>
+                                                                <h3>Appointment booked Successfully!</h3>
+                                                                <p>Appointment booked at <strong><%= center[0].centerName %></strong><br> on <strong>12 Nov 2019
+                                                                        5:00PM to 6:00PM</strong></p>
+                                                                <a href="/dashboard" class="btn btn-primary view-inv-btn">Make another Appointment</a>
+                                                                <a href="/users/logout" class="btn btn-secondary view-inv-btn">Log Out</a>
+                                                            </div>
+                                                        </div>
+                                                 
+                                                </div>
+                                            </div>
+                                        </div>
+                                 
+                                </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
